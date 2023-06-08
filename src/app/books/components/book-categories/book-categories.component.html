@@ -1,0 +1,19 @@
+<div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+    <ul class="space-y-2 font-medium">
+        <li *ngFor="let category of categories$ | async">
+            <a routerLink="/books/{{category.name}}"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                <mat-icon>{{category.icon}}</mat-icon>
+                <span class="ml-3">{{category.name}}</span>
+                <small class="ml-2 text-gray-400">({{category.frequency}})</small>
+            </a>
+<!--
+            <a (click)="selectCategory(category)" href="#"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                <mat-icon>{{category.icon}}</mat-icon>
+                <span class="ml-3">{{category.name}}</span>
+
+            </a>-->
+        </li>
+    </ul>
+</div>

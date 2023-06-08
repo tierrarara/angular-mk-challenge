@@ -1,0 +1,29 @@
+<div class="">
+
+  <mat-toolbar class="">
+
+    <button mat-icon-button color="primary" aria-label="Show Menu" (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Library Challenge</span>
+
+
+  </mat-toolbar>
+
+  <mat-drawer-container class="example-container external-container h-screen">
+    <mat-drawer #drawer class="min-w-min max-w-sm" mode="side">
+      
+      <app-book-categories></app-book-categories>
+     
+      
+      
+    </mat-drawer>
+
+    <div class="example-sidenav-content">
+      <!-- <app-booklist></app-booklist>-->
+      <router-outlet></router-outlet>
+     </div>
+
+  </mat-drawer-container>
+
+</div>

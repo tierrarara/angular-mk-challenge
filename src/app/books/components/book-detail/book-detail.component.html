@@ -1,0 +1,75 @@
+<ng-container *ngIf="book$ | async as book; else notFound">
+
+    <!-- 
+<div class="max-w-xl bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto">
+    <a href="#">
+        <img class="rounded-t-lg" src="{{book.thumbnailUrl | bookImage}}" alt="" width="360" />
+    </a>
+    <div class="p-5">
+        <a href="#">
+            <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{book.title}}</h2>
+        </a>
+        <aside> <small>ISBN: {{book.isbn}}</small></aside>
+        <aside *ngIf="book.pageCount"> <small>Pages: {{book.pageCount}}</small></aside>
+        <p class="mt-3 mb-3 font-normal text-gray-700 dark:text-gray-400 text-justify">{{book.longDescription}}</p>
+        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            back
+            <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        </a>
+    </div>
+</div>
+
+-->
+
+    <div class=" grid grid-rows-2  grid-cols-9 gap-5 rounded-md shadow-md border m-3 w-3/4 mx-auto bg-white pt-3 pr-4">
+        <div class="row-span-2 col-span-3">
+
+            <!-- width="160" height="180" -->
+            <img ngSrc="{{book.thumbnailUrl | bookImage}}" width="320" height="360"  alt="{{book.title}}"
+                class=" rounded-lg w-40" />
+
+        </div>
+        <div class="row-span-2 col-span-6 mb-4">
+
+            <div class="flex flex-row justify-between mt-1">
+                <div class="">
+                    <h2>{{book.title}}</h2>
+                    <aside> <small>ISBN: {{book.isbn}}</small></aside>
+                    <aside *ngIf="book.pageCount"> <small>Pages: {{book.pageCount}}</small></aside>
+                </div>
+
+
+            <!-- TODO: favorites widget  -->
+            <!-- 
+
+                <div class="" *ngIf="book.categories!.indexOf(CategoryEnum.Reading) < 0">
+                    <button (click)="addToReadingList(book)" type="button"
+                        class=" px-3 py-2 text-xs font-medium text-center text-gray-700 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 border border-gray-300  focus:border-gray-500">
+                        Add to my List
+                    </button>
+                </div>
+
+                <div class="" *ngIf="book.categories!.indexOf(CategoryEnum.Reading) >= 0">
+                    <button (click)="removeFromReadingList(book)" type="button"
+                        class=" px-3 py-2 text-xs font-medium text-center text-gray-700 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 border border-gray-300  focus:border-gray-500">
+                        Remove from my List
+                    </button>
+
+                </div>
+            -->
+            </div>
+
+            <p class="text-justify leading-6 ">{{book.longDescription}}</p>
+            
+            <a 
+            (click)="goBackToPrevPage()"
+            href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                back
+            </a>
+        </div>
+        
+    </div>
+
+
+</ng-container>
+<ng-template #notFound>BOOK NOT FOUND</ng-template>

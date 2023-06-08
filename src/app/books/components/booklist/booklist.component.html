@@ -1,0 +1,115 @@
+<div class="h-screen bg-gray-100 pt-5">
+  <h1 class="mb-10 text-center text-2xl font-bold">Books</h1>
+<!-- search bar -->
+  <div class="w-4/6 justify-center max-w-5xl mx-auto">
+    <form>
+      <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+      <div class="relative">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <input 
+          #term
+          (input)="search($event)"
+          type="search" id="default-search"
+          class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none"
+          placeholder="Search Title, Category, isbn..." required>
+        <button type="submit"
+          class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+      </div>
+    </form>
+  </div>
+
+<!-- /search bar -->
+
+<!-- book list -->
+  <div class="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
+
+    <div class="flex flex-col items-center content-center place-self-center" 
+      cdkDropList 
+      cdkDropListLockAxis="y"
+      (cdkDropListDropped)="onDrop($event)"
+      *ngIf="books$ | async as bookList; else loading"
+      >
+<ng-container *ngIf="bookList.length; else emptyList">
+      <div 
+        cdkDrag 
+        cdkDragDisabled="{{!enableDrag}}"
+        cdkDragData="{{book.isbn}}"
+        *ngFor="let book of bookList"
+        class=" grid grid-rows-3 grid-flow-col gap-5 rounded-md shadow-md border m-3 w-full bg-white">
+        <div class="row-span-3 col-span-1">
+
+          <img ngSrc="{{book.thumbnailUrl | bookImage}}" width="160" height="180" alt="{{book.title}}"
+            class="{{enableDrag ? 'canMove' : ''}} rounded-lg w-40" />
+
+        </div>
+        <div class="row-span-2 col-span-6">
+
+          <div class="flex flex-row justify-between mt-1 mr-4">
+            <div class="{{enableDrag ? 'canMove' : ''}}">
+              <h2>{{book.title}}</h2>
+            </div>
+
+            <div class="" *ngIf="book.categories!.indexOf(CategoryEnum.Reading) < 0">
+              <button 
+              (click)="addToReadingList(book)"
+              type="button"
+                class=" px-3 py-2 text-xs font-medium text-center text-gray-700 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 border border-gray-300  focus:border-gray-500">
+                Add to my List
+              </button>
+            </div>
+
+            <div class="" *ngIf="book.categories!.indexOf(CategoryEnum.Reading) >= 0">
+              <button 
+              (click)="removeFromReadingList(book)"
+              type="button"
+                class=" px-3 py-2 text-xs font-medium text-center text-gray-700 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 border border-gray-300  focus:border-gray-500">
+                Remove from my List
+              </button>
+
+            </div>
+
+          </div>
+
+          <p class="px-2">{{book | resume:150}}</p>
+          <aside *ngIf="book.isbn"><small>ISBN: {{book.isbn}}</small></aside>
+
+        </div>
+        <div class="col-span-6 mr-4">
+          <div class="flex flex-row">
+            <div class="">
+              <!-- <button 
+              
+                type="button"
+                class=" px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Show Details
+              </button> -->
+
+              <a 
+              [routerLink]="['/book', book.isbn]"
+              href="/book/detail/{{book.isbn}}"
+              class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+              ShowDetails  
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #emptyList>
+      <div class="m-2">Empty List - TODO: link to all books</div>
+    </ng-template>
+
+    </div>
+    <ng-template #loading> loading books...</ng-template>
+  </div>
+
+  <!-- /book list -->
+
+</div>
